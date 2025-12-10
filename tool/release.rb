@@ -144,10 +144,14 @@ class Release
     @previous_stable_branch = @level == :minor_or_major ? "#{segments[0]}.#{segments[1] - 1}" : @stable_branch
     @previous_stable_branch = "3.7" if @stable_branch == "4.0"
 
-    @previous_release_tag = if @level == :minor_or_major && !@prerelease
-      "v#{@previous_stable_branch}.0"
+    @previous_release_tag = if @level == :minor_or_major
+      if @prerelease
+        `git describe --tags --abbrev=0`.strip
+      else
+        "v#{@previous_stable_branch}.0"
+      end
     else
-      `git describe --tags --abbrev=0`.strip
+      "v#{@stable_branch}.0"
     end
 
     rubygems_version = segments.join(".").gsub(/([a-z])\.(\d)/i, '\1\2')

@@ -24,10 +24,8 @@ changelog_label_mapping:
   "rubygems: skip changelog": null
 
 patch_level_labels:
-  - "rubygems: performance"
   - "rubygems: enhancement"
   - "rubygems: bug fix"
   - "rubygems: security"
-  - "rubygems: deprecation"
   - "rubygems: documentation"
   - "rubygems: skip changelog"

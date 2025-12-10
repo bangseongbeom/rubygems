@@ -18,10 +18,8 @@ changelog_label_mapping:
   "bundler: skip changelog": null
 
 patch_level_labels:
-  - "bundler: performance"
   - "bundler: enhancement"
   - "bundler: bug fix"
   - "bundler: security"
-  - "bundler: deprecation"
   - "bundler: documentation"
   - "bundler: skip changelog"
