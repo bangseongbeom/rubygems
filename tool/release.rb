@@ -303,6 +303,14 @@ class Release
     @unreleased_pull_requests ||= scan_unreleased_pull_requests(unreleased_pr_ids)
   end
 
+  def released_pull_requests
+    commits = `git log --oneline --grep "^Merge pull request #" #{@previous_release_tag}..#{@previous_stable_branch}`.split("\n")
+    commits.filter_map do |commit|
+      match = commit.match(/Merge pull request #(\d+) from /)
+      match[1].to_i if match
+    end
+  end
+
   def scan_unreleased_pull_requests(ids)
     pulls = []
     ids.each do |id|
@@ -328,7 +336,11 @@ class Release
       puts "Processing batch #{index + 1}/#{(commits.size / batch_size.to_f).ceil}"
       result = `gh search prs --repo ruby/rubygems #{batch.join(",")} --json number --jq '.[].number'`.strip
       unless result.empty?
-        result.split("\n").each {|pr_number| pr_ids.add(pr_number.to_i) }
+        result.split("\n").each do |pr_number|
+          pr_id = pr_number.to_i
+          next if @level == :patch && released_pull_requests.include?(pr_id)
+          pr_ids.add(pr_id)
+        end
       end
 
       if index != 0 && index % rate_limit == 0
