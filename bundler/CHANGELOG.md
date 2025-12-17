@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.0.2 (2025-12-17)
+
+### Enhancements:
+
+  - Support single quotes in mise format ruby version [#9183](https://github.com/ruby/rubygems/pull/9183)
+  - Tweak the Bundler's "X gems now installed message": [#9194](https://github.com/ruby/rubygems/pull/9194)
+
+### Bug fixes:
+
+  - Allow to show cli_help with `bundler` executable [#9198](https://github.com/ruby/rubygems/pull/9198)
+  - Allow bundle pristine to work for git gems in the same repo [#9196](https://github.com/ruby/rubygems/pull/9196)
+
 ## 4.0.1 (2025-12-09)
 
 ### Performance:

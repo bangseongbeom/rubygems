@@ -254,10 +254,16 @@ desc "Upload release to S3"
 task :upload_to_s3 do
   require "aws-sdk-s3"
 
-  s3 = Aws::S3::Resource.new(region:"us-west-2")
+  client = Aws::S3::Client.new(region: "us-west-2")
+  transfer_manager = Aws::S3::TransferManager.new(client: client)
+
   %w[zip tgz].each do |ext|
-    obj = s3.bucket("oregon.production.s3.rubygems.org").object("rubygems/rubygems-#{v}.#{ext}")
-    obj.upload_file("pkg/rubygems-#{v}.#{ext}", acl: "public-read")
+    transfer_manager.upload_file(
+      "pkg/rubygems-#{v}.#{ext}",
+      bucket: "oregon.production.s3.rubygems.org",
+      key: "rubygems/rubygems-#{v}.#{ext}",
+      acl: "public-read"
+    )
   end
 end
 
@@ -706,6 +712,8 @@ namespace :bundler do
     Rake::Task["bundler:build_metadata:clean"].tap(&:reenable).invoke
   end
 
+  task "build" => ["bundler:release:check_ruby_version"]
+
   desc "Push to rubygems.org"
   task "release:rubygem_push" => ["bundler:release:setup", "man:check", "bundler:build_metadata", "check_release_preparations", "bundler:release:github"]
 
@@ -725,6 +733,10 @@ namespace :bundler do
       gemspec_version = Bundler::GemHelper.gemspec.version
 
       Release.for_bundler(gemspec_version).create_for_github!
+    end
+
+    task :check_ruby_version do
+      raise "bundler:build need to released Ruby for using nokogiri" if RUBY_PATCHLEVEL.to_i < 0
     end
   end
 end

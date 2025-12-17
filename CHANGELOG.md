@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.2 / 2025-12-17
+
+### Enhancements:
+
+* Pass down value of `BUNDLE_JOBS` to RubyGems before compiling &
+  introduce a new `gem install -j` flag. Pull request
+  [#9171](https://github.com/ruby/rubygems/pull/9171) by Edouard-chin
+* Installs bundler 4.0.2 as a default gem.
+
 ## 4.0.1 / 2025-12-09
 
 ### Enhancements:

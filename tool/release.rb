@@ -144,10 +144,14 @@ class Release
     @previous_stable_branch = @level == :minor_or_major ? "#{segments[0]}.#{segments[1] - 1}" : @stable_branch
     @previous_stable_branch = "3.7" if @stable_branch == "4.0"
 
-    @previous_release_tag = if @level == :minor_or_major && !@prerelease
-      "v#{@previous_stable_branch}.0"
+    @previous_release_tag = if @level == :minor_or_major
+      if @prerelease
+        `git describe --tags --abbrev=0`.strip
+      else
+        "v#{@previous_stable_branch}.0"
+      end
     else
-      `git describe --tags --abbrev=0`.strip
+      "v#{@stable_branch}.0"
     end
 
     rubygems_version = segments.join(".").gsub(/([a-z])\.(\d)/i, '\1\2')
@@ -299,6 +303,14 @@ class Release
     @unreleased_pull_requests ||= scan_unreleased_pull_requests(unreleased_pr_ids)
   end
 
+  def released_pull_requests
+    commits = `git log --oneline --grep "^Merge pull request #" #{@previous_release_tag}..#{@stable_branch}`.split("\n")
+    commits.filter_map do |commit|
+      match = commit.match(/Merge pull request #(\d+) from /)
+      match[1].to_i if match
+    end
+  end
+
   def scan_unreleased_pull_requests(ids)
     pulls = []
     ids.each do |id|
@@ -324,7 +336,11 @@ class Release
       puts "Processing batch #{index + 1}/#{(commits.size / batch_size.to_f).ceil}"
       result = `gh search prs --repo ruby/rubygems #{batch.join(",")} --json number --jq '.[].number'`.strip
       unless result.empty?
-        result.split("\n").each {|pr_number| pr_ids.add(pr_number.to_i) }
+        result.split("\n").each do |pr_number|
+          pr_id = pr_number.to_i
+          next if @level == :patch && released_pull_requests.include?(pr_id)
+          pr_ids.add(pr_id)
+        end
       end
 
       if index != 0 && index % rate_limit == 0
