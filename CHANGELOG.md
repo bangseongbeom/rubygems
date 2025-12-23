@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.0.3 / 2025-12-23
+
+### Enhancements:
+
+* Installs bundler 4.0.3 as a default gem.
+
+### Documentation:
+
+* Fix broken documentation links. Pull request
+  [#9208](https://github.com/ruby/rubygems/pull/9208) by eileencodes
+
 ## 4.0.2 / 2025-12-17
 
 ### Enhancements:
