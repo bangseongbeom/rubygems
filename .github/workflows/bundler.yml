@@ -30,23 +30,29 @@ jobs:
 
         ruby:
           - { name: ruby-3.2, value: 3.2.9 }
-          - { name: ruby-3.3, value: 3.3.9 }
-          - { name: ruby-3.4, value: 3.4.5 }
+          - { name: ruby-3.3, value: 3.3.10 }
+          - { name: ruby-3.4, value: 3.4.8 }
+          - { name: ruby-4.0, value: 4.0.0 }
 
         include:
           - { os: { name: macOS, value: macos-15 }, ruby: { name: ruby-3.2, value: 3.2.9 }, timeout: 90 }
-          - { os: { name: macOS, value: macos-15 }, ruby: { name: ruby-3.3, value: 3.3.9 }, timeout: 90 }
-          - { os: { name: macOS, value: macos-15 }, ruby: { name: ruby-3.4, value: 3.4.5 }, timeout: 90 }
+          - { os: { name: macOS, value: macos-15 }, ruby: { name: ruby-3.3, value: 3.3.10 }, timeout: 90 }
+          - { os: { name: macOS, value: macos-15 }, ruby: { name: ruby-3.4, value: 3.4.8 }, timeout: 90 }
+          - { os: { name: macOS, value: macos-15 }, ruby: { name: ruby-4.0, value: 4.0.0 }, timeout: 90 }
 
           # Ruby 3.2 is about 20 minutes slower than 3.3/3.4, so it will be excluded from testing.
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.9 }, timeout: 150, group: a }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.9 }, timeout: 150, group: b }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.9 }, timeout: 150, group: c }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.9 }, timeout: 150, group: d }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.5 }, timeout: 150, group: a }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.5 }, timeout: 150, group: b }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.5 }, timeout: 150, group: c }
-          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.5 }, timeout: 150, group: d }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.10 }, timeout: 150, group: a }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.10 }, timeout: 150, group: b }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.10 }, timeout: 150, group: c }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.3, value: 3.3.10 }, timeout: 150, group: d }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.8 }, timeout: 150, group: a }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.8 }, timeout: 150, group: b }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.8 }, timeout: 150, group: c }
+          - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-3.4, value: 3.4.8 }, timeout: 150, group: d }
+          # - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-4.0, value: 4.0.0 }, timeout: 150, group: a }
+          # - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-4.0, value: 4.0.0 }, timeout: 150, group: b }
+          # - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-4.0, value: 4.0.0 }, timeout: 150, group: c }
+          # - { os: { name: Windows, value: windows-2025 }, ruby: { name: ruby-4.0, value: 4.0.0 }, timeout: 150, group: d }
 
           - { os: { name: Ubuntu, value: ubuntu-24.04 }, ruby: { name: jruby, value: jruby-10.0.2.0 } }
           - { os: { name: Windows, value: windows-2025 }, ruby: { name: jruby, value: jruby-10.0.2.0 } }
@@ -59,7 +65,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup ruby
-        uses: ruby/setup-ruby@8aeb6ff8030dd539317f8e1769a044873b56ea71 # v1.268.0
+        uses: ruby/setup-ruby@b90be12699fdfcbee4440c2bba85f6f460446bb0 # v1.279.0
         with:
           ruby-version: ${{ matrix.ruby.value }}
           bundler: none
