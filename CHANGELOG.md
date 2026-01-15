@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.0.4 / 2026-01-15
+
+### Enhancements:
+
+* Remove date require from rebuild command. Pull request
+  [#9232](https://github.com/ruby/rubygems/pull/9232) by jeremyevans
+* Installs bundler 4.0.4 as a default gem.
+
+### Bug fixes:
+
+* Add a missing "require 'etc'" statement:. Pull request
+  [#9242](https://github.com/ruby/rubygems/pull/9242) by Edouard-chin
+
 ## 4.0.3 / 2025-12-23
 
 ### Enhancements:
