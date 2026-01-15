@@ -1206,6 +1206,16 @@ RSpec.describe "bundle gem" do
     end
   end
 
+  context "--coc set to none" do
+    before do
+      bundle "gem #{gem_name} --coc=none"
+    end
+
+    it "does not generate any Code of Conduct" do
+      expect(bundled_app("#{gem_name}/CODE_OF_CONDUCT.md")).to_not exist
+    end
+  end
+
   context "gem.coc setting set to ruby" do
     it "generates a Ruby Community Conduct Guideline" do
       bundle "config set gem.coc ruby"
@@ -1239,6 +1249,21 @@ RSpec.describe "bundle gem" do
 
     it "hints that --coc is already configured" do
       expect(out).to match("ruby is already configured, ignoring --coc flag.")
+    end
+  end
+
+  context "gem.coc set to none and --coc with no arguments" do
+    before do
+      bundle "config set gem.coc none"
+      bundle "gem #{gem_name} --coc"
+    end
+
+    it "does not generate any Code of Conduct" do
+      expect(bundled_app("#{gem_name}/CODE_OF_CONDUCT.md")).to_not exist
+    end
+
+    it "hints that --coc is already configured" do
+      expect(out).to match("none is already configured, ignoring --coc flag.")
     end
   end
 
