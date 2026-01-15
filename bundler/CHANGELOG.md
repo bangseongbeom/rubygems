@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.0.4 (2026-01-15)
+
+### Enhancements:
+
+  - Validate more options for add sub-command [#5905](https://github.com/ruby/rubygems/pull/5905)
+  - Support Ruby 4.1 [#9219](https://github.com/ruby/rubygems/pull/9219)
+
+### Bug fixes:
+
+  - Fix dependency source bug in bundler [#9213](https://github.com/ruby/rubygems/pull/9213)
+  - Retain current bundler version on `bundle clean` [#9221](https://github.com/ruby/rubygems/pull/9221)
+
 ## 4.0.3 (2025-12-23)
 
 ### Enhancements:
