@@ -184,6 +184,8 @@ module Bundler
       when "ruby"
         Bundler.ui.info "Ruby Community Conduct Guideline enabled in config"
         templates.merge!("RUBY_SRC_CODE_OF_CONDUCT.md.tt" => "CODE_OF_CONDUCT.md")
+      when "none"
+        # Explicitly skip CODE_OF_CONDUCT.md generation
       end
 
       if ask_and_set(:changelog, "Do you want to include a changelog?",
