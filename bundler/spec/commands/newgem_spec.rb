@@ -1312,6 +1312,21 @@ RSpec.describe "bundle gem" do
     end
   end
 
+  context "gem.coc setting set to false (legacy boolean value)" do
+    before do
+      bundle "config set gem.coc false"
+      bundle "gem #{gem_name}"
+    end
+
+    it "does not generate any Code of Conduct" do
+      expect(bundled_app("#{gem_name}/CODE_OF_CONDUCT.md")).to_not exist
+    end
+
+    it "silently migrates the global config to 'none'" do
+      expect(bundle("config get gem.coc")).to include("none")
+    end
+  end
+
   context "--linter with no argument" do
     before do
       bundle "gem #{gem_name}"

@@ -392,6 +392,13 @@ module Bundler
       return if skip?(:coc)
       coc_template = options[:coc] || Bundler.settings["gem.coc"]
 
+      # Handle backwards compatibility: if the old boolean `false` value is set,
+      # silently migrate to the new `none` value and honor the setting
+      if coc_template.to_s == "false"
+        Bundler.settings.set_global("gem.coc", "none")
+        return "none"
+      end
+
       # Handle backwards compatibility: if the old boolean `true` value is set,
       # prompt the user to choose a specific code of conduct
       if coc_template.to_s == "true"
