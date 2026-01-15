@@ -401,7 +401,7 @@ module Bundler
           "* Ruby:                 https://www.ruby-lang.org/en/conduct/\n"
 
         result = Bundler.ui.ask "Enter a code of conduct. contributor-covenant/ruby/(none):"
-        if /contributor-covenant|ruby/.match?(result)
+        if %w[contributor-covenant ruby].include?(result)
           coc_template = result
         else
           coc_template = false
@@ -417,7 +417,7 @@ module Bundler
         Bundler.ui.info hint_text("coc")
 
         result = Bundler.ui.ask "Enter a code of conduct. contributor-covenant/ruby/(none):"
-        if /contributor-covenant|ruby/.match?(result)
+        if %w[contributor-covenant ruby].include?(result)
           coc_template = result
         else
           coc_template = false
@@ -428,7 +428,7 @@ module Bundler
         end
       end
 
-      if options[:coc] == Bundler.settings["gem.coc"]
+      if options[:coc] && !options[:coc].empty? && options[:coc] == Bundler.settings["gem.coc"]
         Bundler.ui.info "#{options[:coc]} is already configured, ignoring --coc flag."
       end
 
