@@ -413,7 +413,7 @@ module Bundler
         if %w[contributor-covenant ruby].include?(result)
           coc_template = result
         else
-          coc_template = false
+          coc_template = "none"
         end
         Bundler.settings.set_global("gem.coc", coc_template)
       elsif coc_template.to_s.empty?
@@ -429,7 +429,7 @@ module Bundler
         if %w[contributor-covenant ruby].include?(result)
           coc_template = result
         else
-          coc_template = false
+          coc_template = "none"
         end
 
         if Bundler.settings["gem.coc"].nil?
