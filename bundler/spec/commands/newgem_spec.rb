@@ -1247,8 +1247,8 @@ RSpec.describe "bundle gem" do
       expect(bundled_app("#{gem_name}/CODE_OF_CONDUCT.md").read).to include("Ruby Community Conduct Guideline")
     end
 
-    it "hints that --coc is already configured" do
-      expect(out).to match("ruby is already configured, ignoring --coc flag.")
+    it "shows which code of conduct is being used" do
+      expect(out).to match("Using configured code of conduct: ruby")
     end
   end
 
@@ -1262,8 +1262,8 @@ RSpec.describe "bundle gem" do
       expect(bundled_app("#{gem_name}/CODE_OF_CONDUCT.md")).to_not exist
     end
 
-    it "hints that --coc is already configured" do
-      expect(out).to match("none is already configured, ignoring --coc flag.")
+    it "shows which code of conduct is being used" do
+      expect(out).to match("Using configured code of conduct: none")
     end
   end
 

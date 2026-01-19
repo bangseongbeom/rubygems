@@ -391,7 +391,7 @@ module Bundler
     end
 
     def ask_and_set_coc
-      return if skip?(:coc)
+      return "none" if skip?(:coc)
       coc_template = options[:coc] || Bundler.settings["gem.coc"]
 
       # Handle backwards compatibility: if the old boolean `false` value is set,
@@ -408,11 +408,13 @@ module Bundler
           "multiple codes of conduct. Please select which code of conduct you'd like to use:\n" \
           "* Contributor Covenant: https://www.contributor-covenant.org/\n" \
           "* Ruby:                 https://www.ruby-lang.org/en/conduct/\n"
+        Bundler.ui.info "Your choice will update the global gem.coc setting."
 
         result = Bundler.ui.ask "Enter a code of conduct. contributor-covenant/ruby/(none):"
         if %w[contributor-covenant ruby].include?(result)
           coc_template = result
         else
+          Bundler.ui.info "Unrecognized input, skipping code of conduct" unless result.to_s.empty? || result == "none"
           coc_template = "none"
         end
         Bundler.settings.set_global("gem.coc", coc_template)
@@ -429,6 +431,7 @@ module Bundler
         if %w[contributor-covenant ruby].include?(result)
           coc_template = result
         else
+          Bundler.ui.info "Unrecognized input, skipping code of conduct" unless result.to_s.empty? || result == "none"
           coc_template = "none"
         end
 
@@ -438,7 +441,7 @@ module Bundler
       end
 
       if options[:coc] && !options[:coc].empty? && options[:coc] == Bundler.settings["gem.coc"]
-        Bundler.ui.info "#{options[:coc]} is already configured, ignoring --coc flag."
+        Bundler.ui.info "Using configured code of conduct: #{options[:coc]}"
       end
 
       coc_template
