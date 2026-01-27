@@ -32,7 +32,7 @@ configuration file using the following names:
 * `--no-exe`:
   Do not create a binary (overrides `--exe` specified in the global config).
 
-* `--coc`, `--coc=contributor-covenant`, `--coc=ruby`, `--coc=none`:
+* `--coc`, `--coc=contributor-covenant`, `--coc=none`, `--coc=ruby`:
   Specify the code of conduct that Bundler should use when generating the
   project. Acceptable values are `contributor-covenant`, `ruby`, and `none`.
   A `CODE_OF_CONDUCT.md` file will be generated in the project directory
