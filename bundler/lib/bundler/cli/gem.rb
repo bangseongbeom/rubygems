@@ -176,16 +176,18 @@ module Bundler
         templates.merge!("LICENSE.txt.tt" => "LICENSE.txt")
       end
 
-      config[:coc] = ask_and_set_coc
-      case config[:coc]
+      coc_template = ask_and_set_coc
+      case coc_template
       when "contributor-covenant"
+        config[:coc] = true
         Bundler.ui.info "Contributor Covenant enabled in config"
         templates.merge!("CONTRIBUTOR_COVENANT_CODE_OF_CONDUCT.md.tt" => "CODE_OF_CONDUCT.md")
       when "ruby"
+        config[:coc] = true
         Bundler.ui.info "Ruby Community Conduct Guideline enabled in config"
         templates.merge!("RUBY_SRC_CODE_OF_CONDUCT.md.tt" => "CODE_OF_CONDUCT.md")
       when "none"
-        # Explicitly skip CODE_OF_CONDUCT.md generation
+        config[:coc] = false
       end
 
       if ask_and_set(:changelog, "Do you want to include a changelog?",
@@ -410,13 +412,7 @@ module Bundler
           "* Ruby:                 https://www.ruby-lang.org/en/conduct/\n"
         Bundler.ui.info "Your choice will update the global gem.coc setting."
 
-        result = Bundler.ui.ask "Enter a code of conduct. contributor-covenant/ruby/(none):"
-        if %w[contributor-covenant ruby].include?(result)
-          coc_template = result
-        else
-          Bundler.ui.info "Unrecognized input, skipping code of conduct" unless result.to_s.empty? || result == "none"
-          coc_template = "none"
-        end
+        coc_template = prompt_coc_selection
         Bundler.settings.set_global("gem.coc", coc_template)
       elsif coc_template.to_s.empty?
         Bundler.ui.info "\nDo you want to include a code of conduct in gems you generate? " \
@@ -427,13 +423,7 @@ module Bundler
           "* Ruby:                 https://www.ruby-lang.org/en/conduct/\n"
         Bundler.ui.info hint_text("coc")
 
-        result = Bundler.ui.ask "Enter a code of conduct. contributor-covenant/ruby/(none):"
-        if %w[contributor-covenant ruby].include?(result)
-          coc_template = result
-        else
-          Bundler.ui.info "Unrecognized input, skipping code of conduct" unless result.to_s.empty? || result == "none"
-          coc_template = "none"
-        end
+        coc_template = prompt_coc_selection
 
         if Bundler.settings["gem.coc"].nil?
           Bundler.settings.set_global("gem.coc", coc_template)
@@ -445,6 +435,14 @@ module Bundler
       end
 
       coc_template
+    end
+
+    def prompt_coc_selection
+      result = Bundler.ui.ask "Enter a code of conduct. contributor-covenant/ruby/(none):"
+      return result if %w[contributor-covenant ruby].include?(result)
+
+      Bundler.ui.info "Unrecognized input, skipping code of conduct" unless result.to_s.empty? || result == "none"
+      "none"
     end
 
     def ask_and_set_linter

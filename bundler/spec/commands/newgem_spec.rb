@@ -1216,6 +1216,17 @@ RSpec.describe "bundle gem" do
     end
   end
 
+  context "--coc parameter set to an invalid value" do
+    before do
+      bundle "gem #{gem_name} --coc=foo", raise_on_error: false
+    end
+
+    it "fails loudly" do
+      expect(last_command).to be_failure
+      expect(err).to match(/Expected '--coc' to be one of .*; got foo/)
+    end
+  end
+
   context "gem.coc setting set to ruby" do
     it "generates a Ruby Community Conduct Guideline" do
       bundle "config set gem.coc ruby"
