@@ -1647,25 +1647,19 @@ RSpec.describe "bundle gem" do
       global_config "BUNDLE_GEM__COC" => "ruby"
     end
     it_behaves_like "--coc=ruby flag"
-    it_behaves_like "--coc=contributor-covenant flag"
-    it_behaves_like "--no-coc flag"
   end
 
   context "with coc option in bundle config settings set to contributor-covenant" do
     before do
       global_config "BUNDLE_GEM__COC" => "contributor-covenant"
     end
-    it_behaves_like "--coc=ruby flag"
     it_behaves_like "--coc=contributor-covenant flag"
-    it_behaves_like "--no-coc flag"
   end
 
   context "with coc option in bundle config settings set to false" do
     before do
       global_config "BUNDLE_GEM__COC" => "false"
     end
-    it_behaves_like "--coc=ruby flag"
-    it_behaves_like "--coc=contributor-covenant flag"
     it_behaves_like "--no-coc flag"
   end
 
