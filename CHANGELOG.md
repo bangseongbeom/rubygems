@@ -1,5 +1,27 @@
 # Changelog
 
+## 4.0.5 / 2026-01-29
+
+### Enhancements:
+
+* Removed unused deprecate loading. Pull request
+  [#9266](https://github.com/ruby/rubygems/pull/9266) by hsbt
+* Validate executable names for invalid characters. Pull request
+  [#9257](https://github.com/ruby/rubygems/pull/9257) by hsbt
+* Installs bundler 4.0.5 as a default gem.
+
+### Bug fixes:
+
+* Fix RubyGems not able to require the right gem:. Pull request
+  [#9246](https://github.com/ruby/rubygems/pull/9246) by Edouard-chin
+* Remove special behavior for rake. Pull request
+  [#9245](https://github.com/ruby/rubygems/pull/9245) by JasonLunn
+
+### Documentation:
+
+* Added another usage of pristine command. Pull request
+  [#9255](https://github.com/ruby/rubygems/pull/9255) by hsbt
+
 ## 4.0.4 / 2026-01-15
 
 ### Enhancements:

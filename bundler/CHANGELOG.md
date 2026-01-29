@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.5 (2026-01-29)
+
+### Enhancements:
+
+  - Fix Bundler that re-exec $0 when a `version` is present in the config: [#9249](https://github.com/ruby/rubygems/pull/9249)
+
+### Bug fixes:
+
+  - Only use parent source with Git and Path sources [#9269](https://github.com/ruby/rubygems/pull/9269)
+
 ## 4.0.4 (2026-01-15)
 
 ### Enhancements:
