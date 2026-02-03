@@ -22,7 +22,7 @@
 
 require_relative '../../../net-protocol/lib/net/protocol'
 require_relative '../../../uri/lib/uri'
-require_relative '../../../resolv/lib/resolv'
+require 'resolv'
 autoload :OpenSSL, 'openssl'
 
 module Gem::Net   #:nodoc:
@@ -1734,7 +1734,7 @@ module Gem::Net   #:nodoc:
 
         # Server Name Indication (SNI) RFC 3546/6066
         case @address
-        when Gem::Resolv::IPv4::Regex, Gem::Resolv::IPv6::Regex
+        when Resolv::IPv4::Regex, Resolv::IPv6::Regex
           # don't set SNI, as IP addresses in SNI is not valid
           # per RFC 6066, section 3.
 
