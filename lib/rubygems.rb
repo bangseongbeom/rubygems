@@ -1411,9 +1411,7 @@ require_relative "rubygems/specification"
 
 # REFACTOR: This should be pulled out into some kind of hacks file.
 begin
-  ##
   # Defaults the operating system (or packager) wants to provide for RubyGems.
-
   require "rubygems/defaults/operating_system"
 rescue LoadError
   # Ignored
@@ -1428,9 +1426,7 @@ rescue StandardError => e
 end
 
 begin
-  ##
   # Defaults the Ruby implementation wants to provide for RubyGems
-
   require "rubygems/defaults/#{RUBY_ENGINE}"
 rescue LoadError
 end
