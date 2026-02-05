@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.6 / 2026-02-05
+
+### Enhancements:
+
+* Update vendored resolv to 0.7.0. Pull request
+  [#9298](https://github.com/ruby/rubygems/pull/9298) by hsbt
+* Installs bundler 4.0.6 as a default gem.
+
 ## 4.0.5 / 2026-01-29
 
 ### Enhancements:

@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.0.6 (2026-02-05)
+
+### Bug fixes:
+
+  - Fix gzip cache corruption when recovering from HTTP 416 responses [#9272](https://github.com/ruby/rubygems/pull/9272)
+  - Fallback git/path sources to default source [#9301](https://github.com/ruby/rubygems/pull/9301)
+  - Ensure revision is always re-resolved in `git_proxy.rb` [#9294](https://github.com/ruby/rubygems/pull/9294)
+
+### Documentation:
+
+  - Clarify local gem override docs to require git-sourced gems [#9305](https://github.com/ruby/rubygems/pull/9305)
+
 ## 4.0.5 (2026-01-29)
 
 ### Enhancements:
