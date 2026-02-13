@@ -283,7 +283,7 @@ module Bundler
           msg << "  (none)\n"
         else
           @actual_dependencies.sort_by(&:to_s).each do |dep|
-            msg << "  #{dep.to_s}\n"
+            msg << "  #{dep}\n"
           end
         end
 
@@ -293,7 +293,7 @@ module Bundler
           msg << "  (none)\n"
         else
           @lockfile_dependencies.sort_by(&:to_s).each do |dep|
-            msg << "  #{dep.to_s}\n"
+            msg << "  #{dep}\n"
           end
         end
 
