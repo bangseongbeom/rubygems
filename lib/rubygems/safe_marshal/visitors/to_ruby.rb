@@ -48,6 +48,7 @@ module Gem::SafeMarshal
         while idx < size
           push_stack idx
           array << visit(elements[idx])
+          elements[idx] = nil # release AST node for GC
           idx += 1
         end
 
