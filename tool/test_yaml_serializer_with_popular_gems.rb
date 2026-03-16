@@ -71,9 +71,11 @@ def resolve_all_deps(http, top_gems)
 
     batch.each do |name|
       version = nil
+      platform = nil
       deps = begin
         data = fetch_json(http, "/api/v1/gems/#{name}.json")
         version = data["version"]
+        platform = data["platform"]
         runtime = data.dig("dependencies", "runtime") || []
         runtime.map {|d| d["name"] }
       rescue StandardError => e
@@ -82,7 +84,7 @@ def resolve_all_deps(http, top_gems)
       end
 
       resolved << name
-      all[name] = { version: version, deps: deps }
+      all[name] = { version: version, platform: platform, deps: deps }
       deps.each do |dep|
         queue << dep unless resolved.include?(dep) || queue.include?(dep)
       end
@@ -107,13 +109,17 @@ def extract_metadata_from_gem(gem_io)
   nil
 end
 
-def fetch_gemspec_yaml(name, version)
+def fetch_gemspec_yaml(name, version, platform)
   # Extract metadata.gz from the .gem file - the real YAML written by
   # `gem build` using whatever Ruby/Psych the author had at build time.
   # First check GEM_HOME/cache for a local copy, then fall back to download.
   return nil unless version
 
-  gem_filename = "#{name}-#{version}.gem"
+  gem_filename = if platform && platform != "ruby"
+    "#{name}-#{version}-#{platform}.gem"
+  else
+    "#{name}-#{version}.gem"
+  end
 
   # Try local cache in $GEM_HOME/cache
   gem_home = ENV["GEM_HOME"]
@@ -145,7 +151,7 @@ def test_gemspecs(all_gems)
   skip = []
 
   all_gems.sort_by {|name, _| name }.each do |name, info|
-    yaml = fetch_gemspec_yaml(name, info[:version])
+    yaml = fetch_gemspec_yaml(name, info[:version], info[:platform])
     unless yaml
       skip << name
       warn "  #{name}... SKIP (could not fetch)"
